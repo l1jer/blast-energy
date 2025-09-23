@@ -83,18 +83,45 @@ body {
     width: 100%;
 }
 
-.hamburger {
-    display: none;
-    flex-direction: column;
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #2c5530, #4a7c59);
+    color: white;
+    border: none;
+    border-radius: 50%;
     cursor: pointer;
+    box-shadow: 0 4px 15px rgba(44, 85, 48, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
 }
 
-.bar {
-    width: 25px;
-    height: 3px;
-    background: #333;
-    margin: 3px 0;
-    transition: 0.3s;
+.scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+    background: linear-gradient(135deg, #1e3a21, #2c5530);
+    box-shadow: 0 6px 20px rgba(44, 85, 48, 0.4);
+    transform: translateY(-2px);
+}
+
+.scroll-to-top i {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.scroll-to-top:hover i {
+    transform: translateY(-2px);
 }
 
 /* Hero Section */
@@ -559,6 +586,26 @@ body {
     color: #2c5530;
     font-size: 1.2rem;
     width: 20px;
+    flex-shrink: 0;
+}
+
+.contact-info-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.contact-email {
+    color: #2c5530;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.contact-email:hover {
+    color: #4a7c59;
+    text-decoration: underline;
 }
 
 .contact-form {
@@ -713,44 +760,20 @@ body {
     font-size: 0.8rem;
 }
 
+.footer-bottom a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-bottom a:hover {
+    color: white;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
-    .hamburger {
-        display: flex !important;
-    }
-
     .nav-menu {
-        position: fixed !important;
-        left: -100% !important;
-        top: 70px !important;
-        flex-direction: column !important;
-        background-color: white !important;
-        width: 100% !important;
-        text-align: center !important;
-        transition: 0.3s !important;
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05) !important;
-        padding: 2rem 0 !important;
-        display: none !important;
-    }
-
-    .nav-menu.active {
-        left: 0;
-    }
-
-    .nav-menu li {
-        margin: 1rem 0;
-    }
-
-    .hamburger.active .bar:nth-child(2) {
-        opacity: 0;
-    }
-
-    .hamburger.active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
-
-    .hamburger.active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
+        display: none;
     }
 
     .hero-container {
@@ -826,8 +849,24 @@ body {
         grid-template-columns: 1fr;
     }
 
+    .benefit-item {
+        justify-content: flex-start;
+        text-align: left;
+    }
+
     .partnership-cta {
         justify-content: center;
+    }
+
+    .scroll-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .scroll-to-top i {
+        font-size: 1.1rem;
     }
 }
 

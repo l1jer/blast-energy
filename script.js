@@ -1,17 +1,20 @@
-// Mobile Navigation Toggle
-const hamburger = document.getElementById('hamburger');
-const navMenu = document.getElementById('nav-menu');
+// Scroll to Top Button
+const scrollToTopBtn = document.getElementById('scrollToTop');
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
+// Show/hide scroll to top button based on scroll position
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+        scrollToTopBtn.classList.add('visible');
+    } else {
+        scrollToTopBtn.classList.remove('visible');
+    }
 });
 
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
+// Scroll to top when button is clicked
+scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
     });
 });
 
@@ -251,10 +254,9 @@ document.querySelectorAll('.btn').forEach(btn => {
 
 // Keyboard navigation support
 document.addEventListener('keydown', (e) => {
-    // Close mobile menu with Escape key
-    if (e.key === 'Escape' && navMenu.classList.contains('active')) {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
+    // Close scroll to top with Escape key for accessibility
+    if (e.key === 'Escape' && scrollToTopBtn.matches(':focus')) {
+        scrollToTopBtn.blur();
     }
 });
 
@@ -264,17 +266,6 @@ contactForm.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
         e.preventDefault();
         contactForm.dispatchEvent(new Event('submit'));
-    }
-});
-
-// Add focus management for mobile menu
-hamburger.addEventListener('click', () => {
-    if (navMenu.classList.contains('active')) {
-        // Focus first menu item when opening
-        const firstLink = navMenu.querySelector('.nav-link');
-        if (firstLink) {
-            setTimeout(() => firstLink.focus(), 100);
-        }
     }
 });
 
@@ -288,16 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (nameInput) nameInput.setAttribute('aria-label', 'Full name');
     if (emailInput) emailInput.setAttribute('aria-label', 'Email address');
     if (phoneInput) phoneInput.setAttribute('aria-label', 'Phone number');
-    
-    // Add ARIA expanded to mobile menu
-    hamburger.setAttribute('aria-expanded', 'false');
-    hamburger.setAttribute('aria-controls', 'nav-menu');
-    hamburger.setAttribute('aria-label', 'Toggle navigation menu');
-    
-    hamburger.addEventListener('click', () => {
-        const isExpanded = navMenu.classList.contains('active');
-        hamburger.setAttribute('aria-expanded', isExpanded.toString());
-    });
 });
 
 // Performance optimization: Debounce scroll events
