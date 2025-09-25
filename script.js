@@ -91,16 +91,35 @@ contactForm.addEventListener('submit', async function(e) {
     submitBtn.textContent = 'Sending...';
     
     try {
+        const apiUrl = getEmailApiUrl();
+        // Debug: log API endpoint and payload (safe fields only)
+        console.log('[ContactForm] Submitting to', apiUrl);
+        console.log('[ContactForm] Payload', {
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            propertyType: data.propertyType,
+            serviceType: data.serviceType,
+            propertyAddress: data.propertyAddress,
+        });
+
         // Send form data to our email API
-        const response = await fetch(getEmailApiUrl(), {
+        const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data)
         });
-
-        const result = await response.json();
+        console.log('[ContactForm] Response status', response.status);
+        const rawText = await response.text();
+        let result = {};
+        try {
+            result = rawText ? JSON.parse(rawText) : {};
+        } catch (parseError) {
+            console.warn('[ContactForm] Non-JSON response', rawText);
+        }
+        console.log('[ContactForm] Response body', result);
 
         if (response.ok && result.success) {
             showFormStatus('Thank you! Your enquiry has been sent successfully. We\'ll get back to you within 24 hours.', 'success');

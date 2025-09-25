@@ -25,6 +25,10 @@ module.exports = async (req, res) => {
     return res.status(200).end();
   }
 
+  // Debug: method and headers (safe)
+  console.log('[send-email] Method:', req.method);
+  console.log('[send-email] Origin:', origin);
+
   try {
     if (req.method !== 'POST') {
       return res.status(405).json({ error: 'Method not allowed' });
@@ -40,6 +44,9 @@ module.exports = async (req, res) => {
       propertyAddress, 
       message 
     } = req.body || {};
+
+    // Debug: payload fields
+    console.log('[send-email] Payload', { name, email, phone, propertyType, serviceType, propertyAddress, hasMessage: !!message });
 
     // Honeypot check - silently ignore spam
     if (company) {
@@ -60,7 +67,7 @@ module.exports = async (req, res) => {
     }
 
     // Create transporter using Hostinger SMTP
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || 'smtp.hostinger.com',
       port: parseInt(process.env.SMTP_PORT) || 465,
       secure: true,
@@ -69,6 +76,8 @@ module.exports = async (req, res) => {
         pass: process.env.SMTP_PASS
       }
     });
+
+    console.log('[send-email] Using SMTP host:', process.env.SMTP_HOST || 'smtp.hostinger.com');
 
     // Verify transporter configuration
     try {
@@ -124,7 +133,7 @@ Received: ${new Date().toLocaleString('en-AU', {
 })}
     `;
 
-    await transporter.sendMail({
+    const ownerSend = await transporter.sendMail({
       from: `"Blast Energy Website" <${process.env.SMTP_USER || 'info@blastenergy.com.au'}>`,
       to: process.env.OWNER_EMAIL || 'info@blastenergy.com.au',
       subject: `New Enquiry: ${name} - ${serviceType}`,
@@ -132,6 +141,7 @@ Received: ${new Date().toLocaleString('en-AU', {
       text: ownerEmailText,
       html: ownerEmailHtml
     });
+    console.log('[send-email] Owner email sent:', ownerSend && ownerSend.messageId);
 
     // 2. Send confirmation email to the customer
     const customerEmailHtml = `
@@ -186,7 +196,7 @@ Email: info@blastenergy.com.au
 Website: blastenergy.com.au
     `;
 
-    await transporter.sendMail({
+    const customerSend = await transporter.sendMail({
       from: `"Blast Energy" <${process.env.SMTP_USER || 'info@blastenergy.com.au'}>`,
       to: email,
       subject: 'Thank you for your enquiry - Blast Energy',
@@ -194,6 +204,7 @@ Website: blastenergy.com.au
       text: customerEmailText,
       html: customerEmailHtml
     });
+    console.log('[send-email] Customer email sent:', customerSend && customerSend.messageId);
 
     return res.status(200).json({ 
       success: true, 
