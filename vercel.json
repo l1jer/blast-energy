@@ -1,0 +1,12 @@
+{
+  "buildCommand": "echo 'Using static files'",
+  "outputDirectory": "_static-backup",
+  "installCommand": "echo 'No install needed for static files'",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

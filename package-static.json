@@ -1,0 +1,9 @@
+{
+  "name": "blast-energy-static",
+  "version": "1.0.0",
+  "description": "Blast Energy static website",
+  "scripts": {
+    "build": "echo 'Static files ready'",
+    "start": "echo 'Static files ready'"
+  }
+}
