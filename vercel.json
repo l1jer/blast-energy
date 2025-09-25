@@ -1,9 +1,18 @@
 {
   "buildCommand": "echo 'Using static files'",
   "outputDirectory": ".",
-  "installCommand": "echo 'No install needed for static files'",
+  "installCommand": "npm install",
   "framework": null,
+  "functions": {
+    "api/send-email.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
   "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

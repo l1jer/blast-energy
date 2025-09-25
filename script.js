@@ -48,22 +48,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const contactForm = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
 
-// EmailJS config placeholders - replace with your actual IDs
-// Keep these in the client for GitHub Pages; EmailJS stores the private key server-side
-const EMAILJS_PUBLIC_KEY = 'YOUR_EMAILJS_PUBLIC_KEY';
-const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
-const EMAILJS_TEMPLATE_OWNER = 'template_notify_owner';
-const EMAILJS_TEMPLATE_CONFIRM = 'template_confirm_user';
-
-// Initialise EmailJS when SDK is available
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.emailjs && EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
-        emailjs.init(EMAILJS_PUBLIC_KEY);
-        console.log('[EmailJS] Initialised');
-    } else {
-        console.warn('[EmailJS] Not initialised. Replace placeholders with real keys to enable emails.');
+// Email API endpoint - will be set based on environment
+const getEmailApiUrl = () => {
+    // Check if we're on Vercel (production)
+    if (window.location.hostname.includes('vercel.app') || window.location.hostname.includes('blastenergy.com.au')) {
+        return '/api/send-email';
     }
-});
+    // For local development, use the full URL
+    return 'http://localhost:3000/api/send-email';
+};
 
 contactForm.addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -98,39 +91,23 @@ contactForm.addEventListener('submit', async function(e) {
     submitBtn.textContent = 'Sending...';
     
     try {
-        // Send emails via EmailJS if configured; fallback to simulation for dev
-        if (window.emailjs && EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID') {
-            const ownerParams = {
-                to_email: 'jerry.li.adev@gmail.com',
-                from_name: data.name,
-                from_email: data.email,
-                phone: data.phone || '-',
-                property_type: data.propertyType,
-                service_type: data.serviceType,
-                property_address: data.propertyAddress || '-',
-                message: data.message || '-',
-                submitted_at: new Date().toLocaleString('en-AU')
-            };
+        // Send form data to our email API
+        const response = await fetch(getEmailApiUrl(), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
 
-            const userParams = {
-                user_name: data.name,
-                user_email: data.email,
-                service_type: data.serviceType
-            };
+        const result = await response.json();
 
-            // Send owner notification
-            const notifyPromise = emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_OWNER, ownerParams);
-            // Send confirmation to user
-            const confirmPromise = emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CONFIRM, userParams);
-            
-            await Promise.all([notifyPromise, confirmPromise]);
-            console.log('[EmailJS] Emails sent successfully');
+        if (response.ok && result.success) {
+            showFormStatus('Thank you! Your enquiry has been sent successfully. We\'ll get back to you within 24 hours.', 'success');
+            contactForm.reset();
         } else {
-            await simulateFormSubmission(data);
+            throw new Error(result.error || 'Failed to send enquiry');
         }
-
-        showFormStatus('Thank you! Your enquiry has been sent successfully. We\'ll get back to you within 24 hours.', 'success');
-        contactForm.reset();
         formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
     } catch (error) {
