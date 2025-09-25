@@ -2,7 +2,7 @@
 
 ## ✅ Static Site Ready for Vercel
 
-The static backup (`_static-backup/`) contains the complete Blast Energy website and is ready for Vercel deployment.
+The complete Blast Energy website is now in the root directory and ready for Vercel deployment.
 
 ### What's Included:
 - ✅ Complete Blast Energy website with all features
@@ -31,7 +31,7 @@ The static backup (`_static-backup/`) contains the complete Blast Energy website
 
 3. **Configuration**:
    - The `vercel.json` file is configured to:
-     - Use `_static-backup` as the output directory
+     - Use root directory (`.`) as the output directory
      - Serve all routes through `index.html` (SPA routing)
      - Skip build process (static files)
 
@@ -57,7 +57,7 @@ If you want to add email functionality later, set these in Vercel:
 The Gatsby build has Node.js compatibility issues (Node v23 vs Gatsby requirements). The static backup is the recommended approach for deployment.
 
 ## Next Steps:
-1. Deploy to Vercel using the static backup
+1. Deploy to Vercel using the root directory files
 2. Set up custom domain
 3. Configure email server (optional)
 4. Monitor Google Analytics
