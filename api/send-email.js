@@ -1,6 +1,6 @@
-import nodemailer from 'nodemailer';
+const nodemailer = require('nodemailer');
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   // CORS headers
   const origin = req.headers.origin || '';
   const allowedOrigins = [
@@ -206,4 +206,4 @@ Website: blastenergy.com.au
       error: 'Failed to send email. Please try again later or contact us directly.' 
     });
   }
-}
+};

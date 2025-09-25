@@ -5,3 +5,4 @@ src/gatsby-types.d.ts
 .DS_Store
 EMAIL_SETUP.md
 DEPLOYMENT.md
+DEPLOYMENT_FIX.md
