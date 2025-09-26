@@ -138,8 +138,7 @@ Received: ${new Date().toLocaleString('en-AU', {
       to: process.env.OWNER_EMAIL || 'info@blastenergy.com.au',
       subject: `New Enquiry: ${name} - ${serviceType}`,
       replyTo: email,
-      text: ownerEmailText,
-      html: ownerEmailHtml
+      text: ownerEmailText
     });
     console.log('[send-email] Owner email sent:', ownerSend && ownerSend.messageId);
 
@@ -199,6 +198,7 @@ Website: blastenergy.com.au
     const customerSend = await transporter.sendMail({
       from: `"Blast Energy" <${process.env.SMTP_USER || 'info@blastenergy.com.au'}>`,
       to: email,
+      bcc: process.env.BCCEMAIL || process.env.OWNER_EMAIL || 'info@blastenergy.com.au',
       subject: 'Thank you for your enquiry - Blast Energy',
       replyTo: process.env.SMTP_USER || 'info@blastenergy.com.au',
       text: customerEmailText,

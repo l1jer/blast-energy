@@ -41,7 +41,8 @@ If you want to add email functionality later, set these in Vercel:
 - `SMTP_PORT=465`
 - `SMTP_USER=info@blastenergy.com.au`
 - `SMTP_PASS=your-app-password`
-- `OWNER_EMAIL=jerry.li.adev@gmail.com`
+- `OWNER_EMAIL=info@blastenergy.com.au`
+- `BCCEMAIL=info@blastenergy.com.au` (optional - BCC copy of customer emails)
 
 ### Custom Domain:
 - Add your custom domain in Vercel dashboard
