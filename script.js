@@ -91,38 +91,19 @@ contactForm.addEventListener('submit', async function(e) {
     submitBtn.textContent = 'Sending...';
     
     try {
-        const apiUrl = getEmailApiUrl();
-        // Debug: log API endpoint and payload (safe fields only)
-        console.log('[ContactForm] Submitting to', apiUrl);
-        console.log('[ContactForm] Payload', {
-            name: data.name,
-            email: data.email,
-            phone: data.phone,
-            propertyType: data.propertyType,
-            serviceType: data.serviceType,
-            propertyAddress: data.propertyAddress,
-        });
-
         // Send form data to our email API
-        const response = await fetch(apiUrl, {
+        const response = await fetch(getEmailApiUrl(), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data)
         });
-        console.log('[ContactForm] Response status', response.status);
-        const rawText = await response.text();
-        let result = {};
-        try {
-            result = rawText ? JSON.parse(rawText) : {};
-        } catch (parseError) {
-            console.warn('[ContactForm] Non-JSON response', rawText);
-        }
-        console.log('[ContactForm] Response body', result);
+
+        const result = await response.json();
 
         if (response.ok && result.success) {
-            showFormStatus('Thank you! Your enquiry has been sent successfully. We\'ll get back to you within 24 hours.', 'success');
+            showFormStatus('Thank you for reaching out! We\'ve received your enquiry and will get back to you very soon.', 'success');
             contactForm.reset();
         } else {
             throw new Error(result.error || 'Failed to send enquiry');
@@ -139,21 +120,6 @@ contactForm.addEventListener('submit', async function(e) {
     }
 });
 
-// Simulate form submission (replace with actual API call)
-function simulateFormSubmission(data) {
-    return new Promise((resolve, reject) => {
-        // Simulate network delay
-        setTimeout(() => {
-            // Simulate 95% success rate
-            if (Math.random() > 0.05) {
-                console.log('Form data submitted:', data);
-                resolve(data);
-            } else {
-                reject(new Error('Network error'));
-            }
-        }, 1500);
-    });
-}
 
 // Show form status message
 function showFormStatus(message, type) {
@@ -313,10 +279,8 @@ function safeQuerySelector(selector) {
 
 // Initialize all functionality safely
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Blast Energy website loaded successfully');
-    
     // Check if all critical elements exist
-    const criticalElements = ['navbar', 'nav-menu', 'hamburger', 'contactForm'];
+    const criticalElements = ['navbar', 'nav-menu', 'contactForm'];
     const missingElements = criticalElements.filter(id => !document.getElementById(id));
     
     if (missingElements.length > 0) {

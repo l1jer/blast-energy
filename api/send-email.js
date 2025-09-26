@@ -25,9 +25,6 @@ module.exports = async (req, res) => {
     return res.status(200).end();
   }
 
-  // Debug: method and headers (safe)
-  console.log('[send-email] Method:', req.method);
-  console.log('[send-email] Origin:', origin);
 
   try {
     if (req.method !== 'POST') {
@@ -45,8 +42,6 @@ module.exports = async (req, res) => {
       message 
     } = req.body || {};
 
-    // Debug: payload fields
-    console.log('[send-email] Payload', { name, email, phone, propertyType, serviceType, propertyAddress, hasMessage: !!message });
 
     // Honeypot check - silently ignore spam
     if (company) {
@@ -77,7 +72,6 @@ module.exports = async (req, res) => {
       }
     });
 
-    console.log('[send-email] Using SMTP host:', process.env.SMTP_HOST || 'smtp.hostinger.com');
 
     // Verify transporter configuration
     try {
@@ -140,7 +134,6 @@ Received: ${new Date().toLocaleString('en-AU', {
       replyTo: email,
       text: ownerEmailText
     });
-    console.log('[send-email] Owner email sent:', ownerSend && ownerSend.messageId);
 
     // 2. Send confirmation email to the customer
     const customerEmailHtml = `
@@ -149,7 +142,7 @@ Received: ${new Date().toLocaleString('en-AU', {
         
         <p>Dear ${name},</p>
         
-        <p>Thank you for your enquiry regarding <strong>${serviceType}</strong>. We have received your message and will respond to you at our earliest convenience.</p>
+        <p>Thank you for reaching out to us about <strong>${serviceType}</strong>! We're excited to help you with your energy assessment needs and will get back to you very soon.</p>
         
         <p>Here's a summary of your enquiry:</p>
         <ul>
@@ -158,7 +151,7 @@ Received: ${new Date().toLocaleString('en-AU', {
           ${propertyAddress ? `<li><strong>Address:</strong> ${propertyAddress}</li>` : ''}
         </ul>
         
-        <p>Our team typically responds within 24 hours during business days. If you have any urgent questions, please don't hesitate to contact us directly at <a href="mailto:info@blastenergy.com.au">info@blastenergy.com.au</a>.</p>
+        <p>We'll be in touch very soon! If you have any urgent questions in the meantime, feel free to reach out to us directly at <a href="mailto:info@blastenergy.com.au">info@blastenergy.com.au</a> - we're here to help!</p>
         
         <p>Best regards,<br>
         <strong>The Blast Energy Team</strong></p>
@@ -177,14 +170,14 @@ Thank You for Contacting Blast Energy
 
 Dear ${name},
 
-Thank you for your enquiry regarding ${serviceType}. We have received your message and will respond to you at our earliest convenience.
+Thank you for reaching out to us about ${serviceType}! We're excited to help you with your energy assessment needs and will get back to you very soon.
 
 Here's a summary of your enquiry:
 - Service: ${serviceType}
 - Property Type: ${propertyType || 'Not specified'}
 ${propertyAddress ? `- Address: ${propertyAddress}` : ''}
 
-Our team typically responds within 24 hours during business days. If you have any urgent questions, please don't hesitate to contact us directly at info@blastenergy.com.au.
+We'll be in touch very soon! If you have any urgent questions in the meantime, feel free to reach out to us directly at info@blastenergy.com.au - we're here to help!
 
 Best regards,
 The Blast Energy Team
@@ -204,11 +197,10 @@ Website: blastenergy.com.au
       text: customerEmailText,
       html: customerEmailHtml
     });
-    console.log('[send-email] Customer email sent:', customerSend && customerSend.messageId);
 
     return res.status(200).json({ 
       success: true, 
-      message: 'Thank you for your enquiry. We will respond to you shortly.' 
+      message: 'Thank you for reaching out! We\'ve received your enquiry and will get back to you very soon.' 
     });
 
   } catch (error) {

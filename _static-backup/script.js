@@ -129,7 +129,7 @@ contactForm.addEventListener('submit', async function(e) {
             await simulateFormSubmission(data);
         }
 
-        showFormStatus('Thank you! Your enquiry has been sent successfully. We\'ll get back to you within 24 hours.', 'success');
+        showFormStatus('Thank you for reaching out! We\'ve received your enquiry and will get back to you very soon.', 'success');
         contactForm.reset();
         formStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
