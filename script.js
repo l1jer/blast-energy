@@ -98,7 +98,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
 
     revealEmail('obf-email-1');
-    revealEmail('obf-email-2');
     revealPhone('obf-phone');
     patchStructuredData();
 })();

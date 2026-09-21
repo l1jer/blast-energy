@@ -56,34 +56,28 @@ body {
     height: 60px;
 }
 
-.logo-text {
-    color: #2c5530;
-    font-weight: 700;
-    font-size: 1.5rem;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+.nav-logo-link {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
-    margin: 0;
+    text-decoration: none;
 }
 
-.navbar.shrunk .logo-text {
-    font-size: 1.3rem;
+.nav-logo-img {
+    height: 56px;
+    width: auto;
+    display: block;
+    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.logo-blast {
-    background: linear-gradient(135deg, #2c5530, #4a7c59);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 800;
-    letter-spacing: -0.5px;
+.navbar.shrunk .nav-logo-img {
+    height: 44px;
 }
 
-.logo-energy {
-    color: #2c5530;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+.footer-logo-img {
+    height: 88px;
+    width: auto;
+    display: block;
+    margin-bottom: 16px;
 }
 
 .logo-accent {

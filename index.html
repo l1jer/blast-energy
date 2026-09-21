@@ -19,9 +19,11 @@
     <meta property="og:url" content="https://blastenergy.com.au/">
     <meta property="og:title" content="EER Report Canberra & ACT | BASIX Report NSW - Blast Energy">
     <meta property="og:description" content="NatHERS accredited EER reports for Canberra and ACT. NSW-compliant BASIX reports for residential properties. Fast, professional energy assessments.">
-    <meta property="og:image" content="https://blastenergy.com.au/social-card.svg">
-    <meta property="og:image:alt" content="Blast Energy logo on white background">
-    <meta property="og:image:type" content="image/svg+xml">
+    <meta property="og:image" content="https://blastenergy.com.au/logo.jpg">
+    <meta property="og:image:alt" content="Blast Energy Efficiency logo">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1080">
+    <meta property="og:image:height" content="1080">
     <meta property="og:locale" content="en_AU">
     <meta property="og:site_name" content="Blast Energy">
 
@@ -29,12 +31,14 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="EER Report Canberra & ACT | BASIX Report NSW - Blast Energy">
     <meta name="twitter:description" content="NatHERS accredited EER reports for Canberra and ACT. NSW-compliant BASIX reports for residential properties. Fast, professional energy assessments.">
-    <meta name="twitter:image" content="https://blastenergy.com.au/social-card.svg">
+    <meta name="twitter:image" content="https://blastenergy.com.au/logo.jpg">
+    <meta name="twitter:image:alt" content="Blast Energy Efficiency logo">
 
-    <link rel="icon" type="image/svg+xml" href="/brand-icon.svg">
-    <link rel="shortcut icon" href="/brand-icon.svg">
-    <link rel="apple-touch-icon" href="/brand-icon.svg">
-    <link rel="mask-icon" href="/brand-icon.svg" color="#2c5530">
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+    <link rel="shortcut icon" href="/favicon-48.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
     <link rel="stylesheet" href="styles.css">
@@ -88,13 +92,27 @@
         "opens": "08:00",
         "closes": "18:00"
       },
-      "logo": "https://blastenergy.com.au/brand-icon.svg",
-      "image": "https://blastenergy.com.au/social-card.svg",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://blastenergy.com.au/logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "image": "https://blastenergy.com.au/logo.jpg",
       "sameAs": []
     }
     </script>
 
-    <!-- Structured Data: Services -->
+    <!-- Structured Data: Organisation logo for Google Search -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Blast Energy",
+      "url": "https://blastenergy.com.au",
+      "logo": "https://blastenergy.com.au/logo.png"
+    }
+    </script>
     <script type="application/ld+json">
     [
       {
@@ -253,10 +271,9 @@
     <nav class="navbar" id="navbar" aria-label="Main navigation">
         <div class="nav-container">
             <div class="nav-logo">
-                <h2 class="logo-text">
-                    <span class="logo-blast">Blast</span>
-                    <span class="logo-energy">Energy</span>
-                </h2>
+                <a href="#home" class="nav-logo-link" aria-label="Blast Energy home">
+                    <img src="/logo.jpg" alt="Blast Energy Efficiency" class="nav-logo-img" width="80" height="80">
+                </a>
             </div>
             <ul class="nav-menu" id="nav-menu">
                 <li class="nav-item">
@@ -609,7 +626,6 @@
                             <div class="contact-info-text">
                                 <span>Email us for detailed enquiries</span>
                                 <span id="obf-email-1" class="contact-email" data-a="info" data-b="blastenergy.com.au" role="link" tabindex="0">Loading...</span>
-                                <span id="obf-email-2" class="contact-email" data-a="chengjihang" data-b="gmail.com" role="link" tabindex="0">Loading...</span>
                             </div>
                         </div>
                         <div class="contact-item">
@@ -684,6 +700,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
+                    <img src="/logo.jpg" alt="Blast Energy Efficiency" class="footer-logo-img" width="140" height="140">
                     <h3>Blast Energy - EER Report Canberra</h3>
                     <p>Professional EER report services in Canberra and energy assessment services across Australia. NatHERS accredited energy efficiency rating specialists.</p>
                 </div>
